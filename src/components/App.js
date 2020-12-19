@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import SearchBar from './SearchBar';
 import ImageGallery from './ImageGallery';
+import Button from './Button';
 
 const API_KEY = `18984826-9a089bf93f102eeea865f0aeb`;
 const URL = `https://pixabay.com/api/?&image_type=photo&orientation=horizontal`;
@@ -15,29 +16,37 @@ class App extends Component {
     currentPage: 1,
   };
 
-  async componentDidUpdate(prevState) {
-    const { pictureInfo, currentPage } = this.state;
+  componentDidUpdate(prevProps, prevState) {
+    const { pictureInfo } = this.state;
     const prevFetch = prevState.pictureInfo;
     if (prevFetch !== pictureInfo) {
-      const res = await fetch(
-        `${URL}&&key=${API_KEY}&q=${pictureInfo}&page=${currentPage}`,
-      );
-      const fetchInfo = await res.json();
-      this.setState(prevState => ({
-        fetchResponce: [...prevState.fetchResponce, ...fetchInfo.hits],
-      }));
+      this.fetchImages();
     }
   }
-  handleSearchValue = data => {
-    this.setState({ pictureInfo: data });
+
+  fetchImages = async () => {
+    const { pictureInfo, currentPage } = this.state;
+    const res = await fetch(
+      `${URL}&&key=${API_KEY}&q=${pictureInfo}&page=${currentPage}`,
+    );
+    const data = await res.json();
+    this.setState(({ fetchResponce }) => ({
+      fetchResponce: [...fetchResponce, ...data.hits],
+      currentPage: currentPage + 1,
+    }));
   };
+
+  handleSearchValue = data => {
+    this.setState({ pictureInfo: data, fetchResponce: [], currentPage: 1 });
+  };
+
   render() {
-    const { pictureInfo, fetchResponce } = this.state;
+    const { fetchResponce } = this.state;
     return (
       <>
         <SearchBar onSubmit={this.handleSearchValue} />
-
-        <ImageGallery pictureInfo={pictureInfo} fetchArr={fetchResponce} />
+        <ImageGallery fetchArr={fetchResponce} />
+        <Button onClick={this.fetchImages} />
         <ToastContainer position="top-center" autoClose={3000} />
       </>
     );

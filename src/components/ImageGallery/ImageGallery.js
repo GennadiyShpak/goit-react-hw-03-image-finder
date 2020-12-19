@@ -1,13 +1,11 @@
 import ImageGalleryItem from '../ImageGalleryItem';
 
-function ImageGallery({ pictureInfo, fetchArr }) {
+function ImageGallery({ fetchArr }) {
   return (
     <>
       {fetchArr && (
         <ul className="ImageGallery ">
-          <ImageGalleryItem
-          // fetchArr={fetchArr}
-          />
+          <ImageGalleryItem fetchArr={fetchArr} />
         </ul>
       )}
     </>
