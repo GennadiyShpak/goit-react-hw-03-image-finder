@@ -3,7 +3,9 @@
 function ImageGalleryItem({ fetchArr }) {
   return fetchArr.map(img => (
     <li className="ImageGalleryItem" key={img.id}>
-      <img src={img.webformatURL} alt="" className="ImageGalleryItem-image" />
+      <a href={img.webformatURL}>
+        <img src={img.webformatURL} alt="" className="ImageGalleryItem-image" />
+      </a>
     </li>
   ));
 }
