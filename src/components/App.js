@@ -6,14 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import SearchBar from './SearchBar';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
+import Modal from './Modal';
 
 const API_KEY = `18984826-9a089bf93f102eeea865f0aeb`;
 const URL = `https://pixabay.com/api/?&image_type=photo&orientation=horizontal`;
 class App extends Component {
   state = {
     pictureInfo: '',
-    fetchResponce: [],
+    fetchResponce: null,
     currentPage: 1,
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -36,17 +38,22 @@ class App extends Component {
     }));
   };
 
+  togleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
   handleSearchValue = data => {
     this.setState({ pictureInfo: data, fetchResponce: [], currentPage: 1 });
   };
 
   render() {
-    const { fetchResponce } = this.state;
+    const { fetchResponce, showModal } = this.state;
     return (
       <>
         <SearchBar onSubmit={this.handleSearchValue} />
-        <ImageGallery fetchArr={fetchResponce} />
-        <Button onClick={this.fetchImages} />
+        <ImageGallery fetchArr={fetchResponce} showModal={showModal} />
+        {fetchResponce && <Button onClick={this.fetchImages} />}
+        {/* {showModal && <Modal />} */}
         <ToastContainer position="top-center" autoClose={3000} />
       </>
     );

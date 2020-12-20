@@ -1,6 +1,6 @@
 // import propTypes from 'prop-types';
 
-function ImageGalleryItem({ fetchArr }) {
+function ImageGalleryItem({ fetchArr, showModal }) {
   return fetchArr.map(img => (
     <li className="ImageGalleryItem" key={img.id}>
       <a href={img.webformatURL}>
