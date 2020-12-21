@@ -1,11 +1,15 @@
 import ImageGalleryItem from '../ImageGalleryItem';
 
-function ImageGallery({ fetchArr }) {
+function ImageGallery({ fetchArr, showModal, onClick }) {
   return (
     <>
       {fetchArr && (
         <ul className="ImageGallery ">
-          <ImageGalleryItem fetchArr={fetchArr} />
+          <ImageGalleryItem
+            fetchArr={fetchArr}
+            showModal={showModal}
+            onClick={onClick}
+          />
         </ul>
       )}
     </>

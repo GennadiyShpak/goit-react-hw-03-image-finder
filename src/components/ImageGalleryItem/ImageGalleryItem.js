@@ -1,11 +1,13 @@
-// import propTypes from 'prop-types';
-
-function ImageGalleryItem({ fetchArr, showModal }) {
+function ImageGalleryItem({ fetchArr, showModal, onClick }) {
   return fetchArr.map(img => (
-    <li className="ImageGalleryItem" key={img.id}>
-      <a href={img.webformatURL}>
-        <img src={img.webformatURL} alt="" className="ImageGalleryItem-image" />
-      </a>
+    <li className="ImageGalleryItem" key={img.id} onClick={showModal}>
+      <img
+        data-url={img.largeImageURL}
+        src={img.webformatURL}
+        alt={img.tags}
+        className="ImageGalleryItem-image"
+        onClick={onClick}
+      />
     </li>
   ));
 }
